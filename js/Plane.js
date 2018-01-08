@@ -1,38 +1,48 @@
 class Plane {
-    constructor(x, y, r, z=0, player = false) {
+    constructor(x, y, r, z = 0, player = false) {
         this.pos = createVector(x, y);
         this.r = r;
-        this.vel = createVector(0,0);
+        this.vel = createVector(0.1, 0.001);
         this.player = player;
+        this.angle = -180;
+        this.rotSpeed = 0.3;
+        this.mag = 2;
+        this.magChangeSpeed = 1.007;
     }
 
     update() {
-        let newvel = createVector(mouseX-width/2, mouseY-height/2);
-        newvel.setMag(3);
-        this.vel.lerp(newvel, 0.2);
-        this.pos.add(this.vel);
+        let rotatedBy = 0;
+        if (keyIsPressed === true) {
+                if(keyCode === 37) {
+                    rotatedBy = -this.rotSpeed;
+                }
+                if(keyCode === 39) {
+                    rotatedBy = this.rotSpeed;
+                }
+                if(keyCode === 38) {
+                    this.mag *= this.magChangeSpeed;
+                }
+                if(keyCode === 40) {
+                    this.mag /= this.magChangeSpeed;
+                }
+            this.angle += rotatedBy;
+        }
+
+        let newvel = this.vel.rotate(rotatedBy);
+        newvel.setMag(this.mag);
+        this.vel.lerp(newvel, 0.02);
+        this.pos.add(p5.Vector.mult(this.vel, -1.6)); //innervation
     }
 
-    eats(other) {
-        let d = p5.Vector.dist(this.pos, other.pos);
-        if (d < this.r + other.r) {
-            let sum = PI * this.r * this.r + PI * other.r * other.r;
-            this.r = sqrt(sum / PI);
-            //this.r += other.r;
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     show() {
-        fill(255);
-        ellipse(this.pos.x, this.pos.y, this.r*2, this.r*2);
-        fill(0);
-        line(this.pos.x, this.pos.y, this.pos.x + this.r, this.pos.y);
-        if(this.player) {
-            image(mainPlayerImg, this.pos.x, this.pos.y, mainPlayerImg.width/1.3, mainPlayerImg.height/1.3);
-            rotate(PI/4.0);
+        if (this.player) {
+
+            //const angle = atan2(-(mouseY - halfHeight), -(mouseX - halfWidth));
+            rotate(this.angle);
+            const imgWidthHalf = mainPlayerImg.width / 2;
+            image(mainPlayerImg, 0 - imgWidthHalf, 0 - imgWidthHalf, mainPlayerImg.width, mainPlayerImg.height);
+            rotate(-this.angle);
         }
 
     }
