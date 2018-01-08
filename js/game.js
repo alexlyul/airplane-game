@@ -1,6 +1,6 @@
 "use strict";
 const sWidth = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth,
-      sHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+    sHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
 
 
 const greed = function () {
@@ -13,17 +13,17 @@ const greed = function () {
     stroke('gray');
     strokeWeight(2);
     const step = width * 2 / 40;
-    for(let i = 0; i < 40; i ++) {
-        if(xFrom < width) {
+    for (let i = 0; i < 40; i++) {
+        if (xFrom < width) {
             line(xFrom, -height, xFrom, height);
         }
-        if(yFrom < width) {
+        if (yFrom < width) {
             line(-width, yFrom, width, yFrom);
         }
         xFrom += step;
         yFrom += step;
     }
-    for(let i = 0, len = dots.length; i < len; i++) {
+    for (let i = 0, len = dots.length; i < len; i++) {
         fill(255);
         ellipse(dots[i].x, dots[i].y, dots[i].z, dots[i].z);
         fill(0);
@@ -39,7 +39,7 @@ let player,
 
 function setup() {
     createCanvas(sWidth, sHeight);
-    player = new Plane(0, 0, 64, 0, true);
+    player = new Plane(0, 0, true);
     for (let i = 0; i < 200; i++) {
         const x = random(-width, width);
         const y = random(-height, height);
@@ -60,11 +60,7 @@ function draw() {
     pop();
 
     translate(halfWidth, halfHeight);
-
     player.show();
     player.update();
-
     translate(player.pos.x, player.pos.y);
-
-
 }
