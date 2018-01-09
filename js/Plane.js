@@ -15,7 +15,7 @@ class Plane {
     update() {
         let rotatedBy = 0;
         if (keyIsPressed === true && this.player) {
-            //No switch statements!
+            //todo: make asynchronous, important: no switch
             if (keyCode === 37) {
                 rotatedBy = -this.rotSpeed;
             }

@@ -3,7 +3,7 @@ const sWidth = window.innerWidth || document.documentElement.clientWidth || docu
     sHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
 
 
-const greed = function () {
+const grid = function () {
     for (let i = -width; i < width; i += 400) {
         for (let j = -height; j < height; j += 400) {
             image(terrainGrass, i, j, 400, 400);
@@ -66,7 +66,7 @@ function draw() {
     push();
     translate(halfWidth, halfHeight);
     translate(player.pos.x, player.pos.y);
-    greed();
+    grid();
 
     for (let i = 0, len = opponents.length; i < len; i++) {
         opponents[i].show();
