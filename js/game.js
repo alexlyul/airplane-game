@@ -4,10 +4,15 @@ const sWidth = window.innerWidth || document.documentElement.clientWidth || docu
 
 
 const greed = function () {
+    for (let i = -width; i < width; i += 400) {
+        for (let j = -height; j < height; j += 400) {
+            image(terrainGrass, i, j, 400, 400);
+        }
+    }
     stroke('green');
     strokeWeight(6);
-    line(0, -height, 0, height * 2);
-    line(-width * 2, 0, width * 2, 0);
+    line(0, -height, 0, height);
+    line(-width, 0, width, 0);
     let xFrom = -width;
     let yFrom = -height - 13;
     stroke('gray');
@@ -24,7 +29,7 @@ const greed = function () {
         yFrom += step;
     }
     for (let i = 0, len = dots.length; i < len; i++) {
-        fill(255);
+        fill(dots[i].color);
         ellipse(dots[i].x, dots[i].y, dots[i].z, dots[i].z);
         fill(0);
         line(dots[i].x, dots[i].y, dots[i].x + dots[i].z, dots[i].y);
@@ -32,20 +37,24 @@ const greed = function () {
 };
 
 let player,
+    opponents = [],
     dots = [],
-    mainPlayerImg,
     halfWidth,
-    halfHeight;
+    halfHeight,
+    terrainGrass = 'sprites/terrainGrass.jpg';
 
 function setup() {
+    terrainGrass = loadImage(terrainGrass);
     createCanvas(sWidth, sHeight);
-    player = new Plane(0, 0, true);
-    for (let i = 0; i < 200; i++) {
+    player = new Plane(0, 10, true, 'sprites/airplanemain.png');
+    opponents.push(new Plane(0, 0, false, 'sprites/airplane.png'));
+
+    for (let i = 0; i < 100; i++) {
         const x = random(-width, width);
         const y = random(-height, height);
-        dots[i] = new p5.Vector(x, y, 16);
+        dots[i] = new p5.Vector(x, y, 20);
+        dots[i].color = random(0, 1) < 0.5 ? 'red' : 'green';
     }
-    mainPlayerImg = loadImage("sprites/airplane.png");
     halfWidth = width / 2;
     halfHeight = height / 2;
 }
@@ -55,12 +64,18 @@ function draw() {
     angleMode(DEGREES); // set angle mode to DEGREES
 
     push();
-        translate(player.pos.x, player.pos.y);
-        greed();
+    translate(halfWidth, halfHeight);
+    translate(player.pos.x, player.pos.y);
+    greed();
+
+    for (let i = 0, len = opponents.length; i < len; i++) {
+        opponents[i].show();
+        opponents[i].update();
+    }
     pop();
+
 
     translate(halfWidth, halfHeight);
     player.show();
     player.update();
-    translate(player.pos.x, player.pos.y);
 }

@@ -1,5 +1,5 @@
 class Plane {
-    constructor(x, y, player = false) {
+    constructor(x, y, player = false, texturePath) {
         this.pos = createVector(x, y);
         this.vel = createVector(0.1, 0.001);
         this.player = player;
@@ -9,11 +9,12 @@ class Plane {
         this.magMax = 6;
         this.magMin = 1.7;
         this.magChangeSpeed = 1.007;
+        this.texture = loadImage(texturePath);
     }
 
     update() {
         let rotatedBy = 0;
-        if (keyIsPressed === true) {
+        if (keyIsPressed === true && this.player) {
             //No switch statements!
             if (keyCode === 37) {
                 rotatedBy = -this.rotSpeed;
@@ -29,20 +30,21 @@ class Plane {
             }
             this.angle += rotatedBy;
         }
-
-        let newvel = this.vel.rotate(rotatedBy);
-        newvel.setMag(this.mag);
-        this.vel.lerp(newvel, 0.02);
+        let newVel = this.vel.rotate(rotatedBy);
+        newVel.setMag(this.mag);
+        this.vel.lerp(newVel, 0.02);
         this.pos.add(p5.Vector.mult(this.vel, -1.6)); //innervation
     }
 
     show() {
-        if (this.player) {
-            rotate(this.angle);
-            const imgWidthHalf = mainPlayerImg.width / 2;
-            image(mainPlayerImg, 0 - imgWidthHalf, 0 - imgWidthHalf, mainPlayerImg.width, mainPlayerImg.height);
-            rotate(-this.angle);
+        if (!this.player) {
+            push();
+            translate(halfWidth, halfHeight);
         }
-
+        rotate(this.angle);
+        const imgWidthHalf = this.texture.width / 2;
+        image(this.texture, 0 - imgWidthHalf, 0 - imgWidthHalf, this.texture.width, this.texture.height);
+        rotate(-this.angle);
+        if (!this.player) pop();
     }
 }
