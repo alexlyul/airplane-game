@@ -58,7 +58,7 @@ function setup() {
     opponents.push(new Plane(0, 0, false, 'sprites/airplane.png'));
 
     for (let i = 0; i < 8; i++) {
-        clouds.push(new Cloud(`sprites/cloud/cloud_${round(random(0, 2))}.png`),)
+        clouds.push(new Cloud(`sprites/cloud/cloud_${round(random(-0.5, 2))}.png`),)
     }
 
 
