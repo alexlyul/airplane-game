@@ -14,22 +14,24 @@ class Plane {
 
     update() {
         let rotatedBy = 0;
-        if (keyIsPressed === true && this.player) {
-            //todo: make asynchronous, important: no switch
-            if (keyCode === 37) {
-                rotatedBy = -this.rotSpeed;
-            }
-            if (keyCode === 39) {
-                rotatedBy = this.rotSpeed;
-            }
-            if (keyCode === 38) {
-                this.mag = constrain(this.mag * this.magChangeSpeed, this.magMin, this.magMax);
-            }
-            if (keyCode === 40) {
-                this.mag = constrain(this.mag / this.magChangeSpeed, this.magMin, this.magMax);
+        if(this.player) {
+            for(let i = 0, len = DOWNBUTTONS.length; i < len; i++) {
+                if (DOWNBUTTONS[i] === 37) {
+                    rotatedBy = -this.rotSpeed;
+                }
+                if (DOWNBUTTONS[i] === 39) {
+                    rotatedBy = this.rotSpeed;
+                }
+                if (DOWNBUTTONS[i] === 38) {
+                    this.mag = constrain(this.mag * this.magChangeSpeed, this.magMin, this.magMax);
+                }
+                if (DOWNBUTTONS[i] === 40) {
+                    this.mag = constrain(this.mag / this.magChangeSpeed, this.magMin, this.magMax);
+                }
             }
             this.angle += rotatedBy;
         }
+
         let newVel = this.vel.rotate(rotatedBy);
         newVel.setMag(this.mag);
         this.vel.lerp(newVel, 0.02);
