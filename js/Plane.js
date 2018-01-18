@@ -5,6 +5,7 @@ class Plane {
         this.player = player;
         this.angle = -180;
         this.rotSpeed = 0.3;
+        this.rotSpeed = 0.9;
         this.mag = 2;
         this.magMax = 6;
         this.magMin = 1.7;
