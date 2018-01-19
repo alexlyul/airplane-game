@@ -1,3 +1,5 @@
+"use strict";
+
 class Plane {
     constructor(x, y, player = false, texturePath) {
         this.pos = createVector(x, y);
@@ -10,12 +12,30 @@ class Plane {
         this.magMin = 1.7;
         this.magChangeSpeed = 1.007;
         this.texture = loadImage(texturePath);
+        this.TrackItem = class {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.lifetimeCounter = 150;
+                this.lifeTimeStep = 3;
+            }
+
+            show() {
+                stroke(160, this.lifetimeCounter);
+                strokeWeight(15);
+                //todo: fix location using geometry sin cos etc...
+                point(this.x - 20, this.y - 20);
+                point(this.x - 20, this.y + 20);
+                this.lifetimeCounter -= this.lifeTimeStep;
+            }
+        };
+        this.track = [];
     }
 
     update() {
         let rotatedBy = 0;
-        if(this.player) {
-            for(let i = 0, len = DOWNBUTTONS.length; i < len; i++) {
+        if (this.player) {
+            for (let i = 0, len = DOWNBUTTONS.length; i < len; i++) {
                 if (DOWNBUTTONS[i] === 37) {
                     rotatedBy = -this.rotSpeed;
                 }
@@ -38,15 +58,33 @@ class Plane {
         this.pos.add(p5.Vector.mult(this.vel, -1.6)); //innervation
     }
 
+    drawTrack() {
+        for (let i = 0, len = this.track.length; i < len; i++) {
+            if(this.track[i]) {
+                this.track[i].show();
+                if (this.track[i].lifetimeCounter <= 0) {
+                    this.track.pop();
+                }
+            }
+        }
+        this.track.unshift(new this.TrackItem(-this.pos.x, -this.pos.y));
+    }
+
     show() {
+
         if (!this.player) {
             push();
             translate(halfWidth, halfHeight);
         }
+
         rotate(this.angle);
         const imgWidthHalf = this.texture.width / 2;
-        image(this.texture, 0 - imgWidthHalf, 0 - imgWidthHalf, this.texture.width, this.texture.height);
+        image(this.texture, -imgWidthHalf, -imgWidthHalf, this.texture.width, this.texture.height);
+
+
         rotate(-this.angle);
         if (!this.player) pop();
+        this.update();
+
     }
 }

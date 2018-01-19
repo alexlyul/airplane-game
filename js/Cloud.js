@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * speed -> p5.Vector()
  */
@@ -17,6 +19,7 @@ class Cloud {
 
     show() {
         image(this.texture, this.x, this.y);
+
         if ((this.x > fieldLenX + 300) || (this.y > fieldLenY + 300)) {
             this.x = -fieldLenX - 300;
             this.y = round(random(-fieldLenY - 300));
@@ -24,6 +27,5 @@ class Cloud {
         this.x += this.speed.x;
         this.y += this.speed.y;
     }
-
 }
 

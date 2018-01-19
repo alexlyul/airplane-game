@@ -1,4 +1,5 @@
 "use strict";
+
 const sWidth = window.innerWidth || document.documentElement.clientWidth ||
     document.getElementsByTagName('body')[0].clientWidth,
     sHeight = window.innerHeight || document.documentElement.clientHeight ||
@@ -40,7 +41,8 @@ const terrain = function () {
 
     clouds.forEach((cloud) => {
         cloud.show();
-    })
+    });
+    player.drawTrack();
 };
 
 let player,
@@ -62,7 +64,6 @@ function setup() {
     }
 
 
-
     for (let i = 0; i < 100; i++) {
         dots[i] = new p5.Vector(random(-fieldLenX, fieldLenX), random(-fieldLenY, fieldLenY), 20);
         dots[i].color = random(0, 1) < 0.5 ? 'red' : 'green';
@@ -79,6 +80,7 @@ function draw() {
     translate(halfWidth, halfHeight);
     translate(player.pos.x, player.pos.y);
     terrain();
+
     for (let i = 0, len = opponents.length; i < len; i++) {
         opponents[i].show();
         opponents[i].update();
@@ -92,5 +94,4 @@ function draw() {
 
     translate(halfWidth, halfHeight);
     player.show();
-    player.update();
 }

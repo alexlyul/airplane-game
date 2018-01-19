@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Contains all current pressed buttons
  * @type {Array}
