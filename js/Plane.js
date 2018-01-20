@@ -5,7 +5,7 @@ class Plane {
         this.pos = createVector(x, y);
         this.vel = createVector(0.1, 0.001);
         this.player = player;
-        this.angle = -180;
+        this.angle = 180;
         this.rotSpeed = 0.3;
         this.mag = 2;
         this.magMax = 6;
@@ -13,7 +13,8 @@ class Plane {
         this.magChangeSpeed = 1.007;
         this.texture = loadImage(texturePath);
         this.TrackItem = class {
-            constructor(x, y) {
+            constructor(x, y, angle) {
+                this.angleCreated = angle;
                 this.x = x;
                 this.y = y;
                 this.lifetimeCounter = 150;
@@ -21,12 +22,16 @@ class Plane {
             }
 
             show() {
+                push();
+                translate(this.x, this.y);
+                rotate(this.angleCreated);
                 stroke(160, this.lifetimeCounter);
                 strokeWeight(15);
                 //todo: fix location using geometry sin cos etc...
-                point(this.x - 20, this.y - 20);
-                point(this.x - 20, this.y + 20);
+                point(0, -20);
+                point(0,  20);
                 this.lifetimeCounter -= this.lifeTimeStep;
+                pop();
             }
         };
         this.track = [];
@@ -67,7 +72,7 @@ class Plane {
                 }
             }
         }
-        this.track.unshift(new this.TrackItem(-this.pos.x, -this.pos.y));
+        this.track.unshift(new this.TrackItem(-this.pos.x, -this.pos.y, this.angle));
     }
 
     show() {
