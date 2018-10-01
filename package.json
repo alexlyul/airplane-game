@@ -1,39 +1,36 @@
 {
-  "name": "airplanes_game",
+  "name": "airplane-game",
   "version": "1.0.0",
-  "description": "Game using p5.js and socket.io",
-  "main": "app.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/alexlyul/airplane-game.git"
+    "url": "git+https://github.com/alexlyul/airplane-game.git"
   },
-  "keywords": [
-    "game",
-    "airplane",
-    "air",
-    "socket.io",
-    "express",
-    "node",
-    "p5"
-  ],
-  "author": "Alexander Lyulko",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/alexlyul/airplane-game/issues"
   },
   "homepage": "https://github.com/alexlyul/airplane-game#readme",
+  "dependencies": {},
   "devDependencies": {
-    "browser-sync": "^2.23.2",
-    "gulp": "^3.9.1",
-    "gulp-jade": "^1.1.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.3"
-  },
-  "dependencies": {
-    "express": "^4.16.2",
-    "socket.io": "^2.0.4"
+    "@babel/core": "^7.1.2",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.0.4",
+    "file-loader": "^2.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "rimraf": "^2.6.2",
+    "three": "^0.97.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
   }
 }

@@ -2,5 +2,5 @@
 *.log
 tmp
 *.css
-*.html
 node_modules
+dist/
